@@ -1,12 +1,16 @@
 package io.github.spyroo;
 
+import io.github.spyroo.MonetaryChange.Timeframe;
+
+import java.util.List;
+
 public class Expense extends MonetaryChange{
 
 	private double amount;
-	private Timeframe timeframe;
-	private Timeframe frequency;
+	private List<Timeframe> timeframe;
+	private List<Timeframe> frequency;
 	
-	protected Expense(double amount, Timeframe timeframe, Timeframe frequency){
+	protected Expense(double amount, List<Timeframe> timeframe, List<Timeframe> frequency){
 		setAmount(amount);
 		setTimeframe(timeframe);
 		setFrequency(frequency);
@@ -16,11 +20,11 @@ public class Expense extends MonetaryChange{
 		this.amount = amount;
 	}
 
-	public void setTimeframe(Timeframe timeframe) {
+	public void setTimeframe(List<Timeframe> timeframe) {
 		this.timeframe = timeframe;
 	}
 	
-	public void setFrequency(Timeframe frequency) {
+	public void setFrequency(List<Timeframe> frequency) {
 		this.frequency = frequency;
 	}
 
@@ -30,13 +34,23 @@ public class Expense extends MonetaryChange{
 	}
 
 	@Override
-	public Timeframe getTimeframe() {
+	public List<Timeframe> getTimeframe() {
 		return timeframe;
 	}
 
 	@Override
-	public Timeframe getFrequency() {
+	public List<Timeframe> getFrequency() {
 		return frequency;
+	}
+
+	@Override
+	double getTimeframeValue() {
+		return 1 / timeframe.stream().mapToDouble(obj -> (1 / obj.getValue())).sum();
+	}
+
+	@Override
+	double getFrequencyValue() {
+		return 1 / frequency.stream().mapToDouble(obj -> (1 / obj.getValue())).sum();
 	}
 	
 	
