@@ -1,5 +1,7 @@
 package io.github.spyroo;
 
+import java.util.List;
+
 public abstract class MonetaryChange {
 	enum Timeframe {
 		
@@ -23,7 +25,10 @@ public abstract class MonetaryChange {
 			return value;
 		}
 	};
+	
 	abstract double getAmount();
-	abstract Timeframe getTimeframe();
-	abstract Timeframe getFrequency();
+	abstract List<Timeframe> getTimeframe();
+	abstract List<Timeframe> getFrequency();
+	abstract double getTimeframeValue();
+	abstract double getFrequencyValue();
 }

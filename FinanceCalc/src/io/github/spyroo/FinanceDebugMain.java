@@ -4,6 +4,7 @@ import static io.github.spyroo.FactoryFinanceProducer.FactoryType;
 import static io.github.spyroo.MonetaryChange.Timeframe;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class FinanceDebugMain {
@@ -14,20 +15,22 @@ public class FinanceDebugMain {
 	
 	public FinanceDebugMain(){
 		AbstractFinanceFactory incomeFactory = FactoryFinanceProducer.getFactory(FactoryType.INCOME);
-		Income tempIncome =  incomeFactory.getIncome(1, Timeframe.MONTH, Timeframe.DAY);
+		Income tempIncome =  incomeFactory.getIncome(1, Arrays.asList(Timeframe.YEAR), Arrays.asList(Timeframe.DAY, Timeframe.DAY));
 		AbstractFinanceFactory expenseFactory = FactoryFinanceProducer.getFactory(FactoryType.EXPENSE);
-		Expense tempExpense = expenseFactory.getExpense(0, Timeframe.YEAR, Timeframe.DAY);
+		//Expense tempExpense = expenseFactory.getExpense(0, Timeframe.YEAR, Timeframe.MONTH);
 		
 		List<MonetaryChange> changes = new ArrayList<>();
 		changes.add(tempIncome);
-		changes.add(tempExpense);
+		//changes.add(tempExpense);
 		
 		//System.out.println(MonetaryChangeOperations.getYearTotal(changes));
+		List<Timeframe> totalTime = new ArrayList<>();
 		
-		System.out.println(MonetaryChangeOperations.getTotalAfterTime(changes, Timeframe.YEAR));
+		totalTime.add(Timeframe.YEAR);
+
 		
-		System.out.println(tempIncome.getAmount() * tempIncome.getTimeframe().getValue());
-		System.out.println(tempIncome.getFrequency().getValue() / tempIncome.getTimeframe().getValue() * tempIncome.getAmount());//full amount
+		System.out.println(MonetaryChangeOperations.getFormattedString(MonetaryChangeOperations.getTotalAfterTime(changes, totalTime)));
+		
 		
 		
 	}
